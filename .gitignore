@@ -2,9 +2,8 @@
 node_modules/
 **/node_modules/
 
-# Production builds
-dist/
-**/dist/
+# Production builds (committed for reliable deployment)
+# dist/
 
 # Environment files
 .env
