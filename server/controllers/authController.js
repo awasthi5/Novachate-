@@ -1,12 +1,24 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
 };
 
+const checkDb = (res) => {
+    if (mongoose.connection.readyState !== 1) {
+        res.status(503).json({
+            message: 'Database not connected yet. Please add 0.0.0.0/0 in MongoDB Atlas -> Network Access -> Add IP Address.'
+        });
+        return false;
+    }
+    return true;
+};
+
 const register = async (req, res) => {
     try {
+        if (!checkDb(res)) return;
         const { name, username, email, password, confirmPassword } = req.body;
 
         if (!name || !username || !email || !password || !confirmPassword) {
@@ -42,6 +54,7 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try {
+        if (!checkDb(res)) return;
         const { username, email, password } = req.body;
         const loginIdentifier = email || username;
 
