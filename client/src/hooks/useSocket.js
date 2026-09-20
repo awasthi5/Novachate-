@@ -23,7 +23,8 @@ export const useSocket = () => {
   useEffect(() => {
     if (!token) return;
 
-    const socket = io('/', {
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api$/, '') : '/');
+    const socket = io(backendUrl, {
       auth: { token }
     });
     socketRef.current = socket;
