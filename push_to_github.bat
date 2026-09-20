@@ -1,4 +1,5 @@
 @echo off
+set "PATH=C:\Program Files\Git\cmd;C:\Program Files\nodejs;%PATH%"
 title Push NOVACHATE to GitHub
 echo ===================================================
 echo Pushing NOVACHATE to GitHub Repository...
